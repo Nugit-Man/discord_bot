@@ -1923,7 +1923,6 @@ def get_response(user_input: str,username, nameID, channel) -> str:
     lowered: str = user_input.lower()
     
     x = randint(1,100)
-    print(x)
     #nameID == 1211781489931452447 and 
     if(lowered.startswith("**your group is on a ") and (nameID==475196692807811074 or nameID==1211781489931452447)):
         if(channel == "john-wordle"):
@@ -1944,6 +1943,18 @@ def get_response(user_input: str,username, nameID, channel) -> str:
     elif 'hello' in lowered:
         text = 'Hi there!'
     
+    if lowered == ",ai start":
+        fin = open("ai_list.txt","r")
+        while True:
+            line = fin.readline().strip
+            if line == "": break
+            if str(line) == str(channel): return "Already an Kfrat AI user"
+        fout = open("ai_list.txt","a")
+        fout.write(str(channel)+"\n")
+        fout.close()
+        return "You are now a Kfrat AI user"
+
+
     #whole quotation system
     elif (str(channel) == "quotes"):
         if (lowered.count("-")) == 1 and ((lowered.count('"') == 2 or (lowered.count("”") == 1 and lowered.count("“") == 1))):
