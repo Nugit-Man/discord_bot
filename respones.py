@@ -2009,19 +2009,24 @@ def cs2(message,ID):
         if(result <= 7992):
             print("blue")
             array[place].money += 1
+            saveArray(array)
         elif(result <= 9590):
             print("purple")
             array[place].money += 3
+            saveArray(array)
         elif(result <= 9910):
             print("pink")
             array[place].money += 20
+            saveArray(array)
         elif(result <= 9974):
             print("red")
             array[place].money += 100
+            saveArray(array)
         else:
             print("gold")
             array[place].money += 2000
-        
+            saveArray(array)
+    
     else:
         return f"You have {array[place].cases} cs2 cases"
 
