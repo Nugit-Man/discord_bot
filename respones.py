@@ -2000,10 +2000,33 @@ def beef_dip(message,ID):
     return "Your Beef Dip Tier is Tier "+str(array[place].beefdip)
 
 """CHANGE TO cs2_cases"""
-def cases(message,ID):
+def cs2(message,ID):
     array = getArray()
     place = getPlace(ID,array)
-    return f"You have {array[place].cases} cases"
+    if(message == ",cs2 open" and array[place].cases > 0):
+        array[place].cases -= 1
+        result = randint(1,1000)
+        if(result <= 7992):
+            print("blue")
+            array[place].money += 1
+        elif(result <= 9590):
+            print("purple")
+            array[place].money += 3
+        elif(result <= 9910):
+            print("pink")
+            array[place].money += 20
+        elif(result <= 9974):
+            print("red")
+            array[place].money += 100
+        else:
+            print("gold")
+            array[place].money += 2000
+        
+    else:
+        return f"You have {array[place].cases} cs2 cases"
+
+
+
 
 
 #Response based on message sent
@@ -2196,6 +2219,8 @@ def get_response(user_input: str,username, nameID, channel) -> str:
         text = slots(nameID)
     elif lowered.startswith(",music add "):
         text = musicAdd(user_input)
+    elif lowered.startswith(",cs2"):
+        text = cs2(user_input)
     elif lowered.startswith(",achievements") or lowered.startswith(",achievement") or lowered=="sigma tokens for the coolest of people":
         text = achivements(lowered,nameID)
     #give them random money for chatting trol
