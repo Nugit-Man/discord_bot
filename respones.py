@@ -400,7 +400,6 @@ def updateBadges(array, place):
         saveArray(array)
         ID += 1
 
-
 def checkForSpecial(array, place):
     badgeArray = array[place].badges.split("|")
     if len(badgeArray) == 0:
@@ -1108,11 +1107,15 @@ def bank(ID,lowered):
         itemsList = array[place].caseItems.split("|")
         newString = ""
         noWithdraw = 1
+        print("fortnite")
         for i in range(len(itemsList)):
             itemCount = itemsList[i].split("-") [0]
             itemID = itemsList[i].split("-") [1]
-            if itemID == "01":
-                if itemCount > 0:
+            print("balls",i)
+            if int(itemID) == 1:
+                print("Kanye")
+                if int(itemCount) > 0:
+                    print("East")
                     itemCount = str(int(itemCount)-1)
                     noWithdraw = 0
             if newString == "":
@@ -1860,7 +1863,7 @@ def logVC(people):
             if(place != -1):
                 array[place].social += 1
                 print(f"found {array[place].name},Num: {array[place].social}/60")
-                if (array[place].social == 60):   
+                if (array[place].social >= 60):   
                     array[place].social = 0
                     array[place].cash += array[place].bank5 /100 * amount
                     array[place].profit += array[place].bank5 /100 * amount
@@ -1899,8 +1902,8 @@ def wordle(message):
             array[i].caseBuyCredits += 1
         
         #gain interest for case bank
-        array[i].cash += array[i].bank11 * array[i].caseInterest
-        array[i].profit += array[i].bank11 * array[i].caseInterest
+        array[i].cash += array[i].bank10 * array[i].caseInterest
+        array[i].profit += array[i].bank10 * array[i].caseInterest
 
         if array[i].caseInterest > highestCaseRate:
             highestCaseRateID = i
@@ -2175,7 +2178,8 @@ def get_response(user_input: str,username, nameID, channel) -> str:
                       "Hurmet!!!! Purple!!",
                       "Ah! What the?! This isn't the car!!!",
                       "Breads done",
-                      "Yeah x is just a value of x"
+                      "Yeah x is just a value of x",
+                      "suck it mark"
                       ])
     #elif lowered == ",cash in":
         #if(array[place].count >= 1000):
@@ -2186,6 +2190,11 @@ def get_response(user_input: str,username, nameID, channel) -> str:
             text = "Invalid name, no commas allowed"
         else:
             text = changename(nameID,user_input)
+    elif lowered == ",revive":
+        fout = open("revive.txt","a")
+        fout.write(username+","+str(nameID)+"\n")
+        fout.close()
+        text = "you have been added to the draw"
     elif lowered.startswith(",shop") and channel in bot_list:
         text = showShop()
     elif lowered.startswith(",buy") and channel in bot_list:

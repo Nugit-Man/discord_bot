@@ -1,4 +1,4 @@
-Creator,Create Kfrat
+Kfrat,help with Kfrat
 Summer Hardcore 1,Survive the first Summer Hardcore
 Summer Hardcore 2,Survive the second Summer Hardcore
 Summer Hardcore 3,Survive the third Summer Hardcore
@@ -17,3 +17,4 @@ Multi-level Marketing, Make 1000 in interest in one day
 Ultra Lucky Man, Get super lucky
 Forever Alone, Spend 24 hours in a VC alone
 Mr. Popular, Spend an hour in a VC with 8+ people
+Master Badge, Create a special Badge

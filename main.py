@@ -64,18 +64,67 @@ async def on_ready() -> None:
     client.loop.create_task(update_vc_file())  # start background task
 
 
-# STEP 4: HANDLING INCOMING MESSAGES
+# Replace with your channel ID
+TARGET_CHANNEL_ID = 1523517663027138752
+
 @client.event
 async def on_message(message: Message) -> None:
-    if message.author == client.user:
+    # Ignore messages from bots (including yourself)
+    #if message.author.bot:
+    #    return
+
+
+
+
+    if message.content == ",cleanup":
+        # Only allow yourself to run it
+        if message.author.id != 475196692807811074:
+            return
+
+        deleted = 0
+
+        while True:
+            msgs = await message.channel.purge(
+                limit=100,
+                check=lambda m: m.author == client.user,
+                bulk=True
+            )
+
+            if not msgs:
+                break
+
+            deleted += len(msgs)
+            print(f"Deleted {deleted} messages...")
+            await asyncio.sleep(1)  # be nice to the API
+
+        await message.channel.send(f"Finished! Deleted {deleted} messages.")
         return
 
-    username: str = str(message.author)
-    user_message: str = message.content
-    channel: str = str(message.channel)
+
+
+
+
+
+    username = str(message.author)
+    user_message = message.content
+    channel = str(message.channel)
 
     print(f'[{channel}] {username}: "{user_message}"')
+    if(username == "Kfrat 82#6374"):
+        return
+    # Check for the trigger message
+    if user_message.lower() == ",hardcore":
+        target_channel = client.get_channel(TARGET_CHANNEL_ID)
 
+        # If the channel isn't cached, fetch it
+        if target_channel is None:
+            target_channel = await client.fetch_channel(TARGET_CHANNEL_ID)
+
+        await target_channel.send(
+            f"<@&1510721630832296119> get on server"
+        )
+
+    # Continue with your existing message handling
     await send_message(message, user_message)
 
 

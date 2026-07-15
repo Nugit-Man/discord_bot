@@ -1,25 +1,25 @@
-1c - The Head of Exodia
-1c - Right Arm of Exodia
-1c - Left Arm of Exodia
-1c - Right Leg of Exodia
-1c - Left Leg of Exodia
-1c - Gooner
-1c - Goober
-1c - Chicken Jockey
-1c - Stewie
-1c - Peter Griffin
-1c - Sneakers O'Tool
-1c - Gnomer
-1c - Wordler
-1c - IDF Soldier
+0c - The Head of Exodia
+0c - Right Arm of Exodia
+0c - Left Arm of Exodia
+0c - Right Leg of Exodia
+0c - Left Leg of Exodia
+0c - Gooner
+0c - Goober
+0c - Chicken Jockey
+0c - Stewie
+0c - Peter Griffin
+0c - Sneakers O'Tool
+0c - Gnomer
+0c - Wordler
+0c - IDF Soldier
 0c - Flat Earther
-1c - Parkour Noob
-1c - Jake from State Farm
-1c - Alison Burgers
-1c - Ladis Washerum
-1c - Employce Mustwashhands
-1c - Max Imumoccupancy120
-1e - Alexander James Horsey
+0c - Parkour Noob
+0c - Jake from State Farm
+0c - Alison Burgers
+0c - Ladis Washerum
+0c - Employce Mustwashhands
+0c - Max Imumoccupancy120
+0e - Alexander James Horsey
 1e - Javan Quin Hill
 1e - Kaelan Joshua VanVliet
 1e - Joshua Brandon Monteith
@@ -30,7 +30,7 @@
 1e - Oiled Up
 1e - Mr. Bulk
 1e - reteP
-1e - Jesus Christ
+0e - Jesus Christ
 1e - Benjamin Netanyahu
 1e - Parkor Pro
 1e - Faze Clan
@@ -43,3 +43,6 @@
 0l - Man whos hands and legs are Penises
 1s - Exodia, The Forbidden one
 1s - Parkour Champion
+1s - Identity Theft
+1s - THE DICTATOR
+1c - Gamblers Fallacy
