@@ -2011,23 +2011,23 @@ def cs2(message,ID):
         result = randint(1,1000)
         if(result <= 7992):
             print("blue")
-            array[place].money += 1
+            array[place].cash += 1
             saveArray(array)
         elif(result <= 9590):
             print("purple")
-            array[place].money += 3
+            array[place].cash += 3
             saveArray(array)
         elif(result <= 9910):
             print("pink")
-            array[place].money += 20
+            array[place].cash += 20
             saveArray(array)
         elif(result <= 9974):
             print("red")
-            array[place].money += 100
+            array[place].cash += 100
             saveArray(array)
         else:
             print("gold")
-            array[place].money += 2000
+            array[place].cash += 2000
             saveArray(array)
     
     else:
@@ -2234,7 +2234,7 @@ def get_response(user_input: str,username, nameID, channel) -> str:
     elif lowered.startswith(",music add "):
         text = musicAdd(user_input)
     elif lowered.startswith(",cs2"):
-        text = cs2(user_input)
+        text = cs2(user_input,nameID)
     elif lowered.startswith(",achievements") or lowered.startswith(",achievement") or lowered=="sigma tokens for the coolest of people":
         text = achivements(lowered,nameID)
     #give them random money for chatting trol

@@ -20,15 +20,15 @@
 0c - Employce Mustwashhands
 0c - Max Imumoccupancy120
 0e - Alexander James Horsey
-1e - Javan Quin Hill
-1e - Kaelan Joshua VanVliet
-1e - Joshua Brandon Monteith
+0e - Javan Quin Hill
+0e - Kaelan Joshua VanVliet
+0e - Joshua Brandon Monteith
 0e - Evan Joshua Moura Joshua Osmar
-1e - Spencer Douglas McDonald
-1e - Ivan Mate Ivan Luksic Milardovic
-1e - Perogie Lover
-1e - Oiled Up
-1e - Mr. Bulk
+0e - Spencer Douglas McDonald
+0e - Ivan Mate Ivan Luksic Milardovic
+0e - Perogie Lover
+0e - Oiled Up
+0e - Mr. Bulk
 1e - reteP
 0e - Jesus Christ
 1e - Benjamin Netanyahu
@@ -40,7 +40,7 @@
 1l - Parkor Master
 1l - CP Lover
 1l - <:osnar:1474611911113965700>
-0l - Man whos hands and legs are Penises
+1l - Man whos hands and legs are Penises
 1s - Exodia, The Forbidden one
 1s - Parkour Champion
 1s - Identity Theft
