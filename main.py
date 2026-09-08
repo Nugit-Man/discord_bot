@@ -1,12 +1,8 @@
 from typing import Final
 import os
-import asyncio
 from dotenv import load_dotenv
 from discord import Intents, Client, Message
 from respones import get_response
-from respones import logVC
-import discord
-import asyncio
 
 # STEP 0: LOAD OUR TOKEN FROM SOMEWHERE SAFE
 load_dotenv()
@@ -28,11 +24,28 @@ async def send_message(message: Message, user_message: str) -> None:
 
     if is_private := user_message[0] == '?':
         user_message = user_message[1:]
+
     try:
-        response: str = get_response(user_message,str(message.author),message.author.id,str(message.channel))
-        if(response != ""): await message.author.send(response) if is_private else await message.channel.send(response)
+        response, channel_id = get_response(
+            user_message,
+            str(message.author),
+            message.author.id,
+            str(message.channel)
+        )
+
+        if response != "":
+            if is_private:
+                await message.author.send(response)
+            else:
+                channel = client.get_channel(channel_id)
+
+                if channel is not None:
+                    await channel.send(response)
+                else:
+                    print(f'Could not find channel with ID: {channel_id}')
+
     except Exception as e:
-        print(e)
+        print
 
 
 
