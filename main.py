@@ -26,19 +26,12 @@ async def send_message(message: Message, user_message: str) -> None:
         user_message = user_message[1:]
 
     try:
-        response, channel_id = get_response(
-            user_message,
-            str(message.author),
-            message.author.id,
-            message.channel.id
-        )
-
+        response, channel_id = get_response(user_message,str(message.author),message.author.id,message.channel.id)
         if response != "":
             if is_private:
                 await message.author.send(response)
             else:
                 channel = client.get_channel(channel_id)
-
                 if channel is not None:
                     await channel.send(response)
                 else:

@@ -4,6 +4,15 @@ import math
 from objects import Person
 
 
+def get_place(array,id):
+    """
+    Is given an array and an ID and finds where the ID is in the array, returns a -1 if it is not found
+    """
+    for i in range(len(array)):
+        if (array[i].id == id):
+            return i
+    return -1
+
 def get_array():
     """
     gets the array and returns it
@@ -14,9 +23,17 @@ def get_array():
     while True:
         text = fin.readline()
         if(text == ""): break
-        array.append(Person(*text))
+        array.append(Person(text.split(",")))
     fin.close()
     return array
+
+def save_array(array):
+    """
+    Saves the array to the file
+    """
+    fout = open("accounts.txt","w")
+    for i in range(len(array)):
+        fout.write(array[i].tostr()+"\n")
 
 def is_registered(id):
     """
@@ -39,6 +56,14 @@ def register(id,name):
     fout.write(Person.blank(id,name))
     return "You have registered sucsessfully"
 
+def drinks(id):
+    array = get_array()
+    place = get_place(array,id)
+    if (place == -1):
+        return "You are not registered"
+    array[place].beer_count += 1
+    save_array(array)
+    return f"You drank a beer! You have drank {array[place].beer_count} beers"
 
 #Response based on message sent
 def get_response(user_input: str,username, nameID, channel) -> str:
@@ -122,8 +147,11 @@ def get_response(user_input: str,username, nameID, channel) -> str:
         if(is_registered(nameID)):
             text = "You are already registered nerd"
         else:
-            register(nameID, user_input.split(" ")[1])
+            text = register(nameID, user_input.split(" ")[1])
 
+    #Add a drink
+    elif(lowered.startswith(",drink")):
+        text = drinks(nameID)
 
    #Error lines if the command is invalid
     elif lowered.startswith(","):
