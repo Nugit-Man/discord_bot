@@ -38,7 +38,7 @@ async def send_message(message: Message, user_message: str) -> None:
 
 # NEW: BACKGROUND TASK
 async def update_vc_file():
-    await client.wait_until_ready()
+   """ await client.wait_until_ready()
     while not client.is_closed():
         for guild in client.guilds:
             users_in_vc = []
@@ -54,7 +54,7 @@ async def update_vc_file():
 
             print(f"Logged {len(users_in_vc)} users in VC")
 
-        await asyncio.sleep(60)
+        await asyncio.sleep(60)"""
 
 
 # STEP 3: HANDLING THE STARTUP FOR OUR BOT

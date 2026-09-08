@@ -22,6 +22,7 @@ class Person:
          self.commands_run = int(dump[17])
          self.CS2 = int(dump[18])
          self.Achievements = [int(x) for x in dump[19].split("|")]
+         self.beer = int(dump[20])
     def tostr (self):
         #only used to write to file
         return f"{int(self.id)},{int(self.name)},"
@@ -50,6 +51,7 @@ All Variables that will be used
     Commands Run
     CS2 Cases
     Achievements
+    Beer Prestiege
 """
 
 
