@@ -30,7 +30,7 @@ async def send_message(message: Message, user_message: str) -> None:
             user_message,
             str(message.author),
             message.author.id,
-            str(message.channel)
+            message.channel.id
         )
 
         if response != "":

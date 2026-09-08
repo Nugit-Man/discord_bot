@@ -20,12 +20,14 @@ class Person:
          self.count = int(dump[15])
          self.items_purchased = int(dump[16])
          self.commands_run = int(dump[17])
-         self.CS2 = int(dump[18])
-         self.Achievements = [int(x) for x in dump[19].split("|")]
+         self.cs2 = int(dump[18])
+         self.achievements = [int(x) for x in dump[19].split("|")]
          self.beer = int(dump[20])
     def tostr (self):
         #only used to write to file
-        return f"{int(self.id)},{int(self.name)},"
+        return f"{self.id},{self.name},{self.money},{self.wordles},{self.inventory},{self.badges},{self.market},{self.case_count},{self.key_count},{self.beef_dip_count},{self.beef_dip_rank},{self.bank},{self.days_no_gamble},{self.interest},{self.case_interest},{self.blackjack},{self.count},{self.items_purchased},{self.commands_run},{self.cs2},{self.achievements},{self.beer}"
+    def blank (self,id,name):
+        return f"{id},{name},0,0,,,,0,0,0,0,,0,,0,,0,0,0,0,,0"
 
 
 """

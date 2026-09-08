@@ -1,18 +1,53 @@
 from random import choice, randint
 import os
 import math
-from os import startfile
 from objects import Person
 
 
+def get_array():
+    """
+    gets the array and returns it
+    """
+    fin = open("accounts.txt","r")
+    array = []
+
+    while True:
+        text = fin.readline()
+        if(text == ""): break
+        array.append(Person(*text))
+    fin.close()
+    return array
+
+def is_registered(id):
+    """
+    Checks is a person is registered and returns a boolean
+    """
+    array = get_array()
+    for i in range(len(array)):
+        if (array[i].id == id):
+            return True
+    return False
+
+def register(id,name):
+    """
+    Makes sure that the username being registered is valid before registering
+    """
+    for i in range(len(name)):
+        if("1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM ".find(name[i]) == -1):
+            return "This username is not valid, no special characters are allowed"
+    fout = open("accounts.txt","w")
+    fout.write(Person.blank(id,name))
+    return "You have registered sucsessfully"
 
 
 #Response based on message sent
 def get_response(user_input: str,username, nameID, channel) -> str:
     text = ""
-    bot_list = ["john-bot","bot-commands","bot-commands-2"]
+    return_channel = channel
     lowered: str = user_input.lower()
 
+
+    #Return a random string when the criteria are met, a little trolling
     if ((lowered.find("what") != -1) & (len(lowered)>10) & (lowered.count(" ") > 4)) or(randint(1,1000) == 120):
         text = choice(["Ah shit, here we go again ...",
                       "Let's go, open up, it's time for parkour",
@@ -81,7 +116,16 @@ def get_response(user_input: str,username, nameID, channel) -> str:
                       "Breads done",
                       "Yeah x is just a value of x"
                       ])
-   
+
+    #Register
+    elif(lowered.startswith(",register ")):
+        if(is_registered(nameID)):
+            text = "You are already registered nerd"
+        else:
+            register(nameID, user_input.split(" ")[1])
+
+
+   #Error lines if the command is invalid
     elif lowered.startswith(","):
         text = choice([
             "not valid",
@@ -90,4 +134,4 @@ def get_response(user_input: str,username, nameID, channel) -> str:
             ":banana:"
         ])
    
-    return text
+    return text, return_channel
