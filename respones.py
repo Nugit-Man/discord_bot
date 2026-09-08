@@ -1801,7 +1801,7 @@ def getArray():
         text = fin.readline().strip()
         if text == "":
             break
-        array.append(Person(text.split(",") [0],text.split(",") [1],text.split(",") [2],text.split(",") [3],text.split(",") [4],text.split(",") [5],text.split(",") [6],text.split(",") [7],text.split(",") [8],text.split(",") [9],text.split(",") [10],text.split(",") [11],text.split(",") [12],text.split(",") [13],text.split(",") [14],text.split(",") [15],text.split(",") [16],text.split(",") [17],text.split(",") [18],text.split(",") [19],text.split(",") [20],text.split(",") [21],text.split(",") [22],text.split(",") [23],text.split(",") [24],text.split(",") [25],text.split(",") [26],text.split(",") [27],text.split(",") [28],text.split(",") [29],text.split(",") [30],text.split(",") [31],text.split(",") [32],text.split(",") [33],text.split(",") [34],text.split(",") [35],text.split(",") [36],text.split(",") [37]))
+        array.append(Person(*text))
         count +=1
     fin.close()
     return array
