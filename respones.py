@@ -52,8 +52,8 @@ def register(id,name):
     for i in range(len(name)):
         if("1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM ".find(name[i]) == -1):
             return "This username is not valid, no special characters are allowed"
-    fout = open("accounts.txt","w")
-    fout.write(Person.blank(id,name))
+    fout = open("accounts.txt","a")
+    fout.write(Person.blank(id,name)+"\n")
     return "You have registered sucsessfully"
 
 def drinks(id):
@@ -64,6 +64,55 @@ def drinks(id):
     array[place].beer_count += 1
     save_array(array)
     return f"You drank a beer! You have drank {array[place].beer_count} beers"
+
+def beef_dip(message,id):
+    """
+    everything to do with the beef dip command
+    """
+    array = get_array()
+    place = get_place(array,id)
+
+
+    if(message == "count"):
+        count = array[place].beef_dip_count
+        return f"You have had {count} beef dips"
+    elif(message == "rank"):
+            count = array[place].beef_dip_rank
+            return f"You are a rank {count} beef dipper"
+    elif(message == "have"):
+        if(array[place].beef_dip_rank == 5):
+            array[place].beef_dip_count += 1
+            save_array(array)
+            return "You have beef dipped"
+        else:
+            return "Only a tier 5 beef dipper can do this"
+    elif(message.startswith("<@")):
+        if(array[place].beef_dip_rank != 5):
+            return "Only a tier 5 beef dipper can do this"
+        #Add a beef dip for everyone who ate a beef dip together
+        unregistered = 0
+        registered = 0
+
+        for i in range(message.count("@")):
+            find = int(message.split("@") [i+1].split(">")[0])
+            spot = get_place(array,find)
+            if(spot != -1):
+                registered += 1
+                array[spot].beef_dip_count += 1
+            else: unregistered += 1
+        save_array(array)
+
+        if(unregistered != 0):
+            return f"Added a beef dip to {registered} users. {unregistered} are not registered"
+        else:
+            return f"{registered} people beef dipped"
+    elif(message == "help"):
+        return """`count` show how many times you beef dipped
+`rank` see your beef dip rank
+`have` up your beef dip counter by 1
+`<ping someone> <ping someone>` up those peoples beef dip counter by 1"""
+    else:
+        return "Please use a sub-command or do `help` for a list of sub commands"
 
 #Response based on message sent
 def get_response(user_input: str,username, nameID, channel) -> str:
@@ -151,8 +200,24 @@ def get_response(user_input: str,username, nameID, channel) -> str:
 
     #Add a drink
     elif(lowered.startswith(",drink")):
-        text = drinks(nameID)
+        if(not is_registered(nameID)):
+            text = "You are not registered"
+        else:
+            text = drinks(nameID)
 
+    #Beef dip command
+    elif(lowered.startswith(",beef dip")):
+        if(not is_registered(nameID)):
+                    text = "You are not registered"
+        else:
+            lowered = lowered [10:]
+            text = beef_dip(lowered,nameID)
+    elif(lowered.startswith(",beefdip")):
+        if(not is_registered(nameID)):
+                    text = "You are not registered"
+        else:
+            lowered = lowered [9:]
+            text = beef_dip(lowered,nameID)
    #Error lines if the command is invalid
     elif lowered.startswith(","):
         text = choice([

@@ -24,11 +24,12 @@ class Person:
          self.achievements = [x for x in dump[20].split("|")]
          self.beer_count = int(dump[21])
          self.beer_rank = int(dump[22])
+         self.money_streak = int(dump[23])
     def tostr (self):
         #only used to write to file
-        return f"{self.id},{self.name},{self.money},{self.wordles},{clean_up(self.inventory)},{clean_up(self.badges)},{clean_up(self.market)},{self.case_count},{self.key_count},{self.beef_dip_count},{self.beef_dip_rank},{clean_up(self.bank)},{self.days_no_gamble},{clean_up(self.interest)},{self.case_interest},{self.blackjack},{self.count},{self.items_purchased},{self.commands_run},{self.cs2},{clean_up(self.achievements)},{self.beer_count},{self.beer_rank}"
+        return f"{self.id},{self.name},{self.money},{self.wordles},{clean_up(self.inventory)},{clean_up(self.badges)},{clean_up(self.market)},{self.case_count},{self.key_count},{self.beef_dip_count},{self.beef_dip_rank},{clean_up(self.bank)},{self.days_no_gamble},{clean_up(self.interest)},{self.case_interest},{self.blackjack},{self.count},{self.items_purchased},{self.commands_run},{self.cs2},{clean_up(self.achievements)},{self.beer_count},{self.beer_rank},{self.money_streak}"
     def blank (id,name):
-        return f"{id},{name},0,0,,,,0,0,0,0,,0,,0,,0,0,0,0,,0,0"
+        return f"{id},{name},0,0,,,,0,0,0,0,,0,,0,,0,0,0,0,,0,0,0"
 
     
 def clean_up(text):
@@ -67,6 +68,7 @@ All Variables that will be used
     Achievements
     Beer Count
     Beer Prestiege
+    Money Streak
 """
 
 

@@ -38,7 +38,7 @@ async def send_message(message: Message, user_message: str) -> None:
                     print(f'Could not find channel with ID: {channel_id}')
 
     except Exception as e:
-        print
+        print(e)
 
 
 
