@@ -110,9 +110,79 @@ def beef_dip(message,id):
         return """`count` show how many times you beef dipped
 `rank` see your beef dip rank
 `have` up your beef dip counter by 1
-`<ping someone> <ping someone>` up those peoples beef dip counter by 1"""
+`<ping someone> <ping someone>` up those peoples beef dip counter by 1
+`help` see this message"""
     else:
         return "Please use a sub-command or do `help` for a list of sub commands"
+
+def hourly():
+    """
+    Pulls the current hourly value
+    """
+    fin = open("global.txt","r")
+    text = fin.readline()
+    text = text.split(":") [1]
+    fin.close()
+    return int(text)
+
+def reset_hourly():
+    """
+    Resets the hourly value in global to 0
+    """
+    fin = open("global.txt","r")
+    list = []
+
+    #Read from the file
+    while True:
+        text = fin.readline().strip()
+        if (text == ""):
+            break
+        list.append(text)
+    fin.close()
+
+    #Make the change
+    change = list[0]
+    list[0] = change [:-1] +"0"
+
+    #Put it all back into the file
+    fout = open("global.txt","w")
+    for i in range(len(list)):
+        fout.write(list[i]+"\n")
+    fout.close()
+
+def money(message,id):
+    """
+    Dealing with the money command, getting the bonus and seeing your streak
+    """
+    array = get_array()
+    place = get_place(array,id)
+
+    #Check if the hourly bonus is ready
+    if(hourly() != 0):
+        bonus = hourly() + array[place].money_streak + 2
+        reset_hourly()
+        array[place].money_streak += 1
+        for i in range(len(array)):
+            if(array[place].id != id):
+                array[place].money_streak = 0
+
+        array[place].money += bonus
+        save_array(array)
+
+        return f"You got the ${money} bonus"
+    elif(message == "streak"):
+        return f"You currently have a {array[place].money_streak} streak"
+    elif(message == "amount"):
+        return f"You have ${array[place].money}"
+    elif(message == "help"):
+        return """`streak` see your current money streak
+`amount` view your current balence
+(top of every hour) get the hourly bonus
+`help` see this message"""
+
+
+
+    return "Please add a sub command or use `help` for a list of sub commands"
 
 #Response based on message sent
 def get_response(user_input: str,username, nameID, channel) -> str:
@@ -218,6 +288,15 @@ def get_response(user_input: str,username, nameID, channel) -> str:
         else:
             lowered = lowered [9:]
             text = beef_dip(lowered,nameID)
+
+    #The money command
+    elif(lowered.startswith(",money")):
+        if(not is_registered(nameID)):
+            text = "You are not registered"
+        else:
+            lowered = lowered [7:]
+            text = money(nameID)
+
    #Error lines if the command is invalid
     elif lowered.startswith(","):
         text = choice([
