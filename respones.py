@@ -106,11 +106,21 @@ def beef_dip(message,id):
             return f"Added a beef dip to {registered} users. {unregistered} are not registered"
         else:
             return f"{registered} people beef dipped"
+    elif(message.startswith("rankup <@")):
+        if(array[place].beef_dip_rank != 5):
+            return "Only a tier 5 beef dipper can do this"
+        message = message.split("@")[1].split(">")
+        place = get_place(array,int(message))
+        array[place].beef_dip_rank += 1
+        if(array[place].beef_dip_rank == 6):
+            array[place].beef_dip_rank = 5
+        return f"{array[place].name} has sucsessfully ranked up to rank {array[place].beef_dip_rank}"
     elif(message == "help"):
         return """`count` show how many times you beef dipped
 `rank` see your beef dip rank
 `have` up your beef dip counter by 1
 `<ping someone> <ping someone>` up those peoples beef dip counter by 1
+`rankup <ping someone> ranks up the pinged person`
 `help` see this message"""
     else:
         return "Please use a sub-command or do `help` for a list of sub commands"

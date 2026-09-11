@@ -20,6 +20,8 @@ You can't count cards, Win 10 games of blackjack in a row
 GOLD GOLD GOLD!!!,Get a gold from a CS2 case
 Badge-smith,create a special Badge
 AI assistant,help develoup Kfrat AI
+Iron grasp,get a money streak of 30
+Drunk,Blow at least a .08 (on my broken breathalizer)
 Secret Achievement 1,???
 Secret Achievement 2,???
 Secret Achievement 3,???
