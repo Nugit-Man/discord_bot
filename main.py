@@ -3,6 +3,9 @@ import os
 from dotenv import load_dotenv
 from discord import Intents, Client, Message
 from respones import get_response
+from respones import add_hourly
+import time
+import asyncio
 
 # STEP 0: LOAD OUR TOKEN FROM SOMEWHERE SAFE
 load_dotenv()
@@ -44,23 +47,12 @@ async def send_message(message: Message, user_message: str) -> None:
 
 # NEW: BACKGROUND TASK
 async def update_vc_file():
-   """ await client.wait_until_ready()
-    while not client.is_closed():
-        for guild in client.guilds:
-            users_in_vc = []
+    while True:
+        await asyncio.sleep(0.9)
+        if time.asctime().split(" ")[-2].split(":")[1] == "00" and time.asctime().split(" ")[-2].split(":")[2] == "00":
+            add_hourly()
+            await asyncio.sleep(1)
 
-            # collect users in voice channels
-            for channel in guild.voice_channels:
-                for member in channel.members:
-                    users_in_vc.append(member.id)
-
-            # write to file
-            logVC(users_in_vc)
-
-
-            print(f"Logged {len(users_in_vc)} users in VC")
-
-        await asyncio.sleep(60)"""
 
 
 # STEP 3: HANDLING THE STARTUP FOR OUR BOT

@@ -125,6 +125,34 @@ def beef_dip(message,id):
     else:
         return "Please use a sub-command or do `help` for a list of sub commands"
 
+def add_hourly():
+    """
+    Adds 1 to the current hourly value
+    """
+    fin = open("global.txt","r")
+    list = []
+
+    #Read from the file
+    while True:
+        text = fin.readline().strip()
+        if (text == ""):
+            break
+        list.append(text)
+    fin.close()
+
+    #Make the change
+    change = list[0]
+    change = change.split(":")
+    change[0] = change[0]+":"
+    change[1] = str(int(change[1]) + 1)
+    list[0] = change[0]+change[1]
+
+    #Put it all back into the file
+    fout = open("global.txt","w")
+    for i in range(len(list)):
+        fout.write(list[i]+"\n")
+    fout.close()
+
 def hourly():
     """
     Pulls the current hourly value
@@ -173,13 +201,13 @@ def money(message,id):
         reset_hourly()
         array[place].money_streak += 1
         for i in range(len(array)):
-            if(array[place].id != id):
-                array[place].money_streak = 0
+            if(array[i].id != id):
+                array[i].money_streak = 0
 
         array[place].money += bonus
         save_array(array)
 
-        return f"You got the ${money} bonus"
+        return f"You got the ${bonus} bonus"
     elif(message == "streak"):
         return f"You currently have a {array[place].money_streak} streak"
     elif(message == "amount"):
@@ -305,7 +333,7 @@ def get_response(user_input: str,username, nameID, channel) -> str:
             text = "You are not registered"
         else:
             lowered = lowered [7:]
-            text = money(nameID)
+            text = money(lowered,nameID)
 
    #Error lines if the command is invalid
     elif lowered.startswith(","):
