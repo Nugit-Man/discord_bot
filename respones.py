@@ -163,6 +163,35 @@ def hourly():
     fin.close()
     return int(text)
 
+def add_hourly():
+    """
+    Add's 1 to the last hourly check in global.txt
+    """
+    fin = open("global.txt","r")
+    list = []
+
+    #Read from the file
+    while True:
+        text = fin.readline().strip()
+        if (text == ""):
+            break
+        list.append(text)
+    fin.close()
+
+    #make the change
+    change = list[0]
+    num = change.split(":") [1]
+    num = int(num)
+    num += 1
+    change = change.split(":")+":"+str(num)
+
+    #Put it all back into the file
+    fout = open("global.txt","w")
+    for i in range(len(list)):
+        fout.write(list[i]+"\n")
+    fout.close()
+
+
 def reset_hourly():
     """
     Resets the hourly value in global to 0
