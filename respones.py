@@ -165,7 +165,7 @@ def hourly():
 
 def add_hourly():
     """
-    Add's 1 to the last hourly check in global.txt
+    Adds 1 to the current hourly value
     """
     fin = open("global.txt","r")
     list = []
@@ -178,12 +178,12 @@ def add_hourly():
         list.append(text)
     fin.close()
 
-    #make the change
+    #Make the change
     change = list[0]
-    num = change.split(":") [1]
-    num = int(num)
-    num += 1
-    change = change.split(":")+":"+str(num)
+    change = change.split(":")
+    change[0] = change[0]+":"
+    change[1] = str(int(change[1]) + 1)
+    list[0] = change[0]+change[1]
 
     #Put it all back into the file
     fout = open("global.txt","w")
