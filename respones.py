@@ -191,7 +191,6 @@ def add_hourly():
         fout.write(list[i]+"\n")
     fout.close()
 
-
 def reset_hourly():
     """
     Resets the hourly value in global to 0
@@ -251,8 +250,39 @@ def money(message,id):
 
     return "Please add a sub command or use `help` for a list of sub commands"
 
+def leaderboard(type):
+    """
+    Gets a leaderboard for the given type
+    """
+    if(type == "money"):
+        key = "money"
+    elif(type == "beer"):
+        key = "beer_count"
+    elif(type == "beefdip" or type == "beef"):
+        key = "beef_dip_count"
+    else:
+        return "not a valid leaderboard, valid leaderboards are:\nmoney, beer, beef dip"
+    array = get_array()
+    text = ""
+    for i in range(min(10,len(array))):
+        low = -1
+        by = ""
+        spot = -1
+        for j in range(len(array)):
+            check = getattr(array[j],key)
+            if(check>low):
+                low = check
+                by = array[j].name
+                spot = j
+        text += f"{i+1}: {low} by {by}\n"
+        array.pop(spot)
+    return text
+        
+
+
+
 #Response based on message sent
-def get_response(user_input: str,username, nameID, channel) -> str:
+def get_response(user_input: str,username, nameID, channel):
     text = ""
     return_channel = channel
     lowered: str = user_input.lower()
@@ -334,6 +364,13 @@ def get_response(user_input: str,username, nameID, channel) -> str:
             text = "You are already registered nerd"
         else:
             text = register(nameID, user_input.split(" ")[1])
+
+    #check the leaderboards
+    elif(lowered.startswith(",leaderboard")):
+        if(lowered.count(" ") > 0):
+            text = leaderboard(lowered.split(" ") [1])
+        else:
+            text = "not a valid leaderboard, valid leaderboards are:\nmoney, beer, beef dip"
 
     #Add a drink
     elif(lowered.startswith(",drink")):
