@@ -208,7 +208,7 @@ def reset_hourly():
 
     #Make the change
     change = list[0]
-    list[0] = change [:-1] +"0"
+    list[0] = change [:12] +"0"
 
     #Put it all back into the file
     fout = open("global.txt","w")
