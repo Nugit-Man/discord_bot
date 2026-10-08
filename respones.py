@@ -125,19 +125,9 @@ def beef_dip(message,id):
     else:
         return "Please use a sub-command or do `help` for a list of sub commands"
 
-def hourly():
-    """
-    Pulls the current hourly value
-    """
-    fin = open("global.txt","r")
-    text = fin.readline()
-    text = text.split(":") [1]
-    fin.close()
-    return int(text)
-
 def add_hourly():
     """
-    Add's 1 to the last hourly check in global.txt
+    Adds 1 to the current hourly value
     """
     fin = open("global.txt","r")
     list = []
@@ -150,12 +140,50 @@ def add_hourly():
         list.append(text)
     fin.close()
 
-    #make the change
+    #Make the change
     change = list[0]
-    num = change.split(":") [1]
-    num = int(num)
-    num += 1
-    change = change.split(":")+":"+str(num)
+    change = change.split(":")
+    change[0] = change[0]+":"
+    change[1] = str(int(change[1]) + 1)
+    list[0] = change[0]+change[1]
+
+    #Put it all back into the file
+    fout = open("global.txt","w")
+    for i in range(len(list)):
+        fout.write(list[i]+"\n")
+    fout.close()
+
+def hourly():
+    """
+    Pulls the current hourly value
+    """
+    fin = open("global.txt","r")
+    text = fin.readline()
+    text = text.split(":") [1]
+    fin.close()
+    return int(text)
+
+def add_hourly():
+    """
+    Adds 1 to the current hourly value
+    """
+    fin = open("global.txt","r")
+    list = []
+
+    #Read from the file
+    while True:
+        text = fin.readline().strip()
+        if (text == ""):
+            break
+        list.append(text)
+    fin.close()
+
+    #Make the change
+    change = list[0]
+    change = change.split(":")
+    change[0] = change[0]+":"
+    change[1] = str(int(change[1]) + 1)
+    list[0] = change[0]+change[1]
 
     #Put it all back into the file
     fout = open("global.txt","w")
@@ -180,7 +208,7 @@ def reset_hourly():
 
     #Make the change
     change = list[0]
-    list[0] = change [:-1] +"0"
+    list[0] = change [:12] +"0"
 
     #Put it all back into the file
     fout = open("global.txt","w")
@@ -201,13 +229,13 @@ def money(message,id):
         reset_hourly()
         array[place].money_streak += 1
         for i in range(len(array)):
-            if(array[place].id != id):
-                array[place].money_streak = 0
+            if(array[i].id != id):
+                array[i].money_streak = 0
 
         array[place].money += bonus
         save_array(array)
 
-        return f"You got the ${money} bonus"
+        return f"You got the ${bonus} bonus"
     elif(message == "streak"):
         return f"You currently have a {array[place].money_streak} streak"
     elif(message == "amount"):
@@ -222,14 +250,39 @@ def money(message,id):
 
     return "Please add a sub command or use `help` for a list of sub commands"
 
-def is_ai(channel):
+def leaderboard(type):
     """
-    Checks if the given channel is apart of the kfrat ai system
+    Gets a leaderboard for the given type
     """
+    if(type == "money"):
+        key = "money"
+    elif(type == "beer"):
+        key = "beer_count"
+    elif(type == "beefdip" or type == "beef"):
+        key = "beef_dip_count"
+    else:
+        return "not a valid leaderboard, valid leaderboards are:\nmoney, beer, beef dip"
+    array = get_array()
+    text = ""
+    for i in range(min(10,len(array))):
+        low = -1
+        by = ""
+        spot = -1
+        for j in range(len(array)):
+            check = getattr(array[j],key)
+            if(check>low):
+                low = check
+                by = array[j].name
+                spot = j
+        text += f"{i+1}: {low} by {by}\n"
+        array.pop(spot)
+    return text
+        
+
 
 
 #Response based on message sent
-def get_response(user_input: str,username, nameID, channel) -> str:
+def get_response(user_input: str,username, nameID, channel):
     text = ""
     return_channel = channel
     lowered: str = user_input.lower()
@@ -315,6 +368,13 @@ def get_response(user_input: str,username, nameID, channel) -> str:
         else:
             text = register(nameID, user_input.split(" ")[1])
 
+    #check the leaderboards
+    elif(lowered.startswith(",leaderboard")):
+        if(lowered.count(" ") > 0):
+            text = leaderboard(lowered.split(" ") [1])
+        else:
+            text = "not a valid leaderboard, valid leaderboards are:\nmoney, beer, beef dip"
+
     #Add a drink
     elif(lowered.startswith(",drink")):
         if(not is_registered(nameID)):
@@ -342,7 +402,7 @@ def get_response(user_input: str,username, nameID, channel) -> str:
             text = "You are not registered"
         else:
             lowered = lowered [7:]
-            text = money(nameID)
+            text = money(lowered,nameID)
 
    #Error lines if the command is invalid
     elif lowered.startswith(","):
