@@ -2,7 +2,7 @@ from random import choice, randint
 import os
 import math
 from objects import Person
-
+import ai
 
 def get_place(array,id):
     """
@@ -163,7 +163,6 @@ def add_hourly():
         fout.write(list[i]+"\n")
     fout.close()
 
-
 def reset_hourly():
     """
     Resets the hourly value in global to 0
@@ -223,15 +222,24 @@ def money(message,id):
 
     return "Please add a sub command or use `help` for a list of sub commands"
 
+def is_ai(channel):
+    """
+    Checks if the given channel is apart of the kfrat ai system
+    """
+
+
 #Response based on message sent
 def get_response(user_input: str,username, nameID, channel) -> str:
     text = ""
     return_channel = channel
     lowered: str = user_input.lower()
 
+    #Check for kfrat ai
+    if(ai.is_ai(channel) and (not lowered.startswith(","))):
+        return 0
 
     #Return a random string when the criteria are met, a little trolling
-    if ((lowered.find("what") != -1) & (len(lowered)>10) & (lowered.count(" ") > 4)) or(randint(1,1000) == 120):
+    elif ((lowered.find("what") != -1) & (len(lowered)>10) & (lowered.count(" ") > 4)) or(randint(1,1000) == 120):
         text = choice(["Ah shit, here we go again ...",
                       "Let's go, open up, it's time for parkour",
                       "What will the next act entail?",
