@@ -287,9 +287,12 @@ def get_response(user_input: str,username, nameID, channel):
     return_channel = channel
     lowered: str = user_input.lower()
 
+    print(channel)
+
     #Check for kfrat ai
     if(ai.is_ai(channel) and (not lowered.startswith(","))):
-        return 0
+        a,b = ai.main(user_input,channel)
+        return a,b
 
     #Return a random string when the criteria are met, a little trolling
     elif ((lowered.find("what") != -1) & (len(lowered)>10) & (lowered.count(" ") > 4)) or(randint(1,1000) == 120):
@@ -360,6 +363,16 @@ def get_response(user_input: str,username, nameID, channel):
                       "Breads done",
                       "Yeah x is just a value of x"
                       ])
+
+    #Join the ai shit
+    elif(lowered == ",ai"):
+        text = "Please do `,ai join` in your DM's with Kfrat to join the ai system"
+    elif(lowered == ",ai join"):
+        text = "MAKE SURE YOU ARE DM'ing Kfrat Nerd, do `,ai join confirm` to actually join"
+    elif(lowered == ",ai join confirm"):
+        fout = open("ai/channels.txt","a")
+        fout.write(str(channel)+"\n")
+        text = "You are now a kfrat AI user, please help fill out responses you get and feel free to make your own!"
 
     #Register
     elif(lowered.startswith(",register ")):

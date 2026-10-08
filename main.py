@@ -35,10 +35,18 @@ async def send_message(message: Message, user_message: str) -> None:
                 await message.author.send(response)
             else:
                 channel = client.get_channel(channel_id)
-                if channel is not None:
+                if channel is None:
+                    try:
+                        channel = await client.fetch_channel(channel_id)
+                    except Exception as e:
+                        print(f'Could not fetch channel {channel_id}: {e}')
+                        return
+
+                await channel.send(response)
+                """ if channel is not None:
                     await channel.send(response)
                 else:
-                    print(f'Could not find channel with ID: {channel_id}')
+                    print(f'Could not find channel with ID: {channel_id}')"""
 
     except Exception as e:
         print(e)

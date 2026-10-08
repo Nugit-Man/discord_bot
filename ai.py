@@ -1,7 +1,11 @@
 from random import randint
 
 def is_ai(dud):
-    return True
+    register = get_array("ai/channels.txt")
+    for i in range(len(register)):
+        if(int(register[i]) == dud):
+            return True
+    return False
 
 def count_lines(file):
     """Counts the lines in a given file and returns how many lines there are"""
@@ -55,7 +59,6 @@ def main(message,channel):
     brain = get_array("ai/brain.txt")
     register = get_array("ai/channels.txt")
 
-
     #Step 1, check if the user is filling out a request
     for i in range(len(outgoing)):
         if(int(outgoing[i].split("\t")[1]) == channel):
@@ -72,13 +75,13 @@ def main(message,channel):
             save(outgoing,"ai/asking.txt")
             save(brain,"ai/brain.txt")
             return return_text, return_channel
-        
+
     #Step 2, Now that we know they are not furfilling a message, it means they must be making one
     #Lets see if the message they want is in the brain first
     for i in range(len(brain)):
-        if(brain.split("/t") [0] == message):
-            return brain.split("/t") [1], channel
-        
+        if(brain[i].split("\t") [0] == message.strip()):
+            return brain[i].split("\t")[1], channel
+
     #Step 3, since it is not in the brain, we will have to ask someone to furfill that request
     #There are a few steps that need to be made before we can send it off to someone
     #First, we need to make sure that there is some avilible space to put it
@@ -91,9 +94,12 @@ def main(message,channel):
     #Second, we need to make sure that the user doesn't already have a request already waiting a response
     #Probably should have done this step one, but it should still work in this order
     for i in range(len(outgoing)):
-        if (int(outgoing.split("/t") [0]) == channel):
+        print(i)
+        print(outgoing[i])
+        if (int(outgoing[i].split("\t") [0]) == channel):
             return "Please wait for your first request to finish", channel
 
+    print("I should not have removed all of this crap")
     #Step 4, time to send out the message to a random person that is not the person sending the message
 
     #Part 1: Pull all possible channels
@@ -101,19 +107,23 @@ def main(message,channel):
         for j in range(len(register)):
             if (outgoing[i].split("\t")[1] == register [j]):
                 register.pop(j)
-            elif (channel == int(register[j])):
-                register.pop(j)
+
+    #Part 1.5: make sure it does not go to the same person
+    for i in range(len(register)):
+        if (channel == int(register[i])):
+            register.pop(i)
+            break
 
     #Part 2: select one at random
     num = randint(1,len(register))
 
     #Part 3: add it to outgoing
-    outgoing.append(str(channel)+"\t"+register[num]+"\n"+message)
+    outgoing.append(str(channel)+"\t"+register[num-1]+"\t"+message)
 
     #Part 4: Save outgoing
     save(outgoing,"ai/asking.txt")
 
     #Part 5: Return Everything
-    return "Make a response for the fallowing: "+message, int(register[num])
+    return "Make a response for the following: "+message, int(register[num-1])
 
     #Part 6: Profit
