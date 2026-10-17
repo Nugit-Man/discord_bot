@@ -90,7 +90,7 @@ def main(message,channel):
     #And we do not want them sending the message to theirselves
     if(len(outgoing) +1 == len(register)):
         return "Sorry, ai is overloaded currently, please try again later", channel
-    
+
     #Second, we need to make sure that the user doesn't already have a request already waiting a response
     #Probably should have done this step one, but it should still work in this order
     for i in range(len(outgoing)):
@@ -99,14 +99,23 @@ def main(message,channel):
         if (int(outgoing[i].split("\t") [0]) == channel):
             return "Please wait for your first request to finish", channel
 
-    print("I should not have removed all of this crap")
     #Step 4, time to send out the message to a random person that is not the person sending the message
 
     #Part 1: Pull all possible channels
     for i in range(len(outgoing)):
+        test = False
         for j in range(len(register)):
-            if (outgoing[i].split("\t")[1] == register [j]):
-                register.pop(j)
+            print(i,j,len(outgoing),len(register))
+            if(j>len(register)):
+                break
+            if(i>len(outgoing)):
+                break
+            if(outgoing[i].count("\t") >= 1):
+                if (outgoing[i].split("\t")[1] == register[j]):
+                    register.pop(j)
+                    test = True
+            if test:
+                break
 
     #Part 1.5: make sure it does not go to the same person
     for i in range(len(register)):
