@@ -278,6 +278,21 @@ def leaderboard(type):
         array.pop(spot)
     return text
         
+def quote_add(text):
+    quote = text.split("-")[0].strip()
+    by = text.split("-")[1].strip()
+    fin = open("quotes.txt","r")
+    while True:
+        text = fin.readline().strip()
+        if (text == ""):
+            fin.close()
+            return "User not found, do `COMMAND NOT MADE YET` to see who you can quote"
+        if (text == by):
+            fout = open("quotes\\"+by+".txt","a")
+            fout.write(quote+"\n")
+            fout.close()
+            fin.close()
+            return "Quote added sucsessully!"
 
 
 
