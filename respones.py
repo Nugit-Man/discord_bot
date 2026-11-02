@@ -279,6 +279,9 @@ def leaderboard(type):
     return text
         
 def quote_add(text):
+    """
+    Adds a quote to the database if the person is found
+    """
     quote = text.split("-")[0].strip()
     by = text.split("-")[1].strip()
     fin = open("quotes.txt","r")
@@ -295,6 +298,13 @@ def quote_add(text):
             return "Quote added sucsessully!"
 
 
+
+
+def help():
+    """
+    Time to make an actual help command I guess
+    """
+    return "Current Commands:\n```,ai\n,register\n,leaderboard\n,drink\n,beefdip\n,money```"
 
 #Response based on message sent
 def get_response(user_input: str,username, nameID, channel):
