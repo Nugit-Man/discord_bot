@@ -2,6 +2,7 @@ from random import choice, randint
 import os
 import math
 from objects import Person
+from objects import kingCrimson
 import ai
 
 def get_place(array,id):
@@ -297,14 +298,41 @@ def quote_add(text):
             fin.close()
             return "Quote added sucsessully!"
 
+def king_crimson(text):
+    """Everything done with our king Crimson rankings"""
+    #Get the song list, because it wil be useful for everything
+    songs = []
+    fin = open("kingCrimson/songs.txt","r")
 
+    while True:
+        text = fin.readline()
+        if(text == ""): break
+        songs.append(kingCrimson(text.split(",")))
+    fin.close()
+
+
+    if(text == "matches"):
+        #Shows todays matches
+        fin = open("global.txt","r")
+        #skip to line 3, no need to make a for loop with how little I have to skip
+        fin.readline()
+        fin.readline()
+        text = fin.readline().split(":")[1].split(",")
+        fin.close()
+        match = f"Match 1. (A):{songs[int(text[0])].name} vs (B):{songs[int(text[1])].name}\n"
+        match += f"Match 2. (A):{songs[int(text[2])].name} vs (B):{songs[int(text[3])].name}\n"
+        match += f"Match 3. (A):{songs[int(text[4])].name} vs (B):{songs[int(text[5])].name}\n"
+        match += f"Match 4. (A):{songs[int(text[6])].name} vs (B):{songs[int(text[7])].name}\n"
+        match += f"Match 5. (A):{songs[int(text[8])].name} vs (B):{songs[int(text[9])].name}"
+        return match
 
 
 def help():
+
     """
     Time to make an actual help command I guess
     """
-    return "Current Commands:\n```,ai\n,register\n,leaderboard\n,drink\n,beefdip\n,money```"
+    return "Current Commands:\n```,ai\n,register\n,leaderboard\n,drink\n,beefdip\n,money\nkc```"
 
 #Response based on message sent
 def get_response(user_input: str,username, nameID, channel):
@@ -388,6 +416,9 @@ def get_response(user_input: str,username, nameID, channel):
                       "Breads done",
                       "Yeah x is just a value of x"
                       ])
+    
+    elif (lowered.startswith(",kc ")):
+        text = king_crimson(lowered[4:])
 
     #Join the ai shit
     elif(lowered == ",ai"):

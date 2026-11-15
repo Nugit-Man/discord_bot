@@ -77,3 +77,16 @@ All Variables that will be used
 #Launch Ultrakill
 #Do the wordle 100 times
 #Buy 100 Items from the shop
+
+
+
+#The class per person
+class kingCrimson:
+    def __init__(self,dump):
+         self.id = int(dump[0])
+         self.name = dump[1]
+         self.rating = float(dump[2])
+         self.RD = float(dump[3])
+    def tostr (self):
+        #only used to write to file
+        return f"{self.id},{self.name},{self.rating},{self.RD}"
