@@ -430,6 +430,10 @@ def get_response(user_input: str,username, nameID, channel):
         fout.write(str(channel)+"\n")
         text = "You are now a kfrat AI user, please help fill out responses you get and feel free to make your own!"
 
+    #help
+    elif(lowered == ",help"):
+        text= help()
+
     #Register
     elif(lowered.startswith(",register ")):
         if(is_registered(nameID)):
